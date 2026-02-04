@@ -1,0 +1,22 @@
+Package: cpp11rng
+Title: R wrappers for common C++ random number generators
+Version: 0.0.0.9000
+Authors@R: 
+  c(
+    person("Drew", "Herren", email = "drewherrenopensource@gmail.com", role = c("aut", "cre"), comment = c(ORCID = "0000-0003-4109-6611"))
+  )
+Description: R wrappers for C++ random number generators provided by the standard library, boost, and a custom implementation.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.3
+LinkingTo: 
+    cpp11, BH
+VignetteBuilder: knitr
+SystemRequirements: C++17
+Imports: 
+    R6,
+    stats
+URL: https://github.com/andrewherren/cpp11_r_rng
+BugReports: https://github.com/andrewherren/cpp11_r_rng/issues
+Config/testthat/edition: 3

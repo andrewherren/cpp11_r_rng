@@ -1,0 +1,6 @@
+OBJECTS = \
+    discrete.o \
+    gamma.o \
+    normal.o \
+    uniform.o \
+    cpp11.o
