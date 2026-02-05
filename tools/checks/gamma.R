@@ -2,7 +2,7 @@
 library(cpp11rng)
 
 # Set up gamma parameters
-shape <- 0.5
+shape <- 2.5
 scale <- 1
 
 # Define sampling parameters
@@ -12,7 +12,9 @@ num_draws <- 10000000
 sampled_values <- sample_gamma(n = num_draws, shape = shape, scale = scale, method = "custom")
 
 # Q-Q plot
-qqplot(sampled_values, rgamma(num_draws, shape = shape, scale = scale))
+comp <- rgamma(num_draws, shape = shape, scale = scale)
+qqplot(sampled_values, comp)
+abline(0,1,col="blue",lty=3,lwd=3)
 
 # K-S test
-ks.test(sampled_values, rgamma(num_draws, shape = shape, scale = scale))
+ks.test(pgamma(sampled_values, shape = shape, scale = scale), "punif", min = 0, max = 1)

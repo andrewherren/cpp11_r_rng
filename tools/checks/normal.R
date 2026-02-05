@@ -12,7 +12,9 @@ num_draws <- 10000000
 sampled_values <- sample_normal(n = num_draws, mean = mean, sd = sd, method = "custom")
 
 # Q-Q plot
-qqplot(sampled_values, rnorm(num_draws, mean = mean, sd = sd))
+comp <- rnorm(num_draws, mean = mean, sd = sd)
+qqplot(sampled_values, comp)
+abline(0,1,col="blue",lty=3,lwd=3)
 
 # K-S test
-ks.test(sampled_values, rnorm(num_draws, mean = mean, sd = sd))
+ks.test(pnorm(sampled_values, mean = mean, sd = sd), "punif", min = 0, max = 1)
