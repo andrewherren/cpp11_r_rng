@@ -15,7 +15,7 @@ sample_discrete(n, elements, prob, random_seed = -1, method = "std")
 
 \item{random_seed}{Random seed for reproducibility.}
 
-\item{method}{Underlying C++ sampling method to use ("std" or "boost").}
+\item{method}{Underlying C++ sampling method to use ("std", "boost", "custom").}
 }
 \value{
 A vector of sampled values of length \code{n}.

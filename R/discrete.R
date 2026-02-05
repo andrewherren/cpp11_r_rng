@@ -4,7 +4,7 @@
 #' @param elements Vector from which to sample.
 #' @param prob Selection probabilities for each element in the outcome vector.
 #' @param random_seed Random seed for reproducibility.
-#' @param method Underlying C++ sampling method to use ("std" or "boost").
+#' @param method Underlying C++ sampling method to use ("std", "boost", "custom").
 #'
 #' @return A vector of sampled values of length `n`.
 #' @export
@@ -18,6 +18,8 @@ sample_discrete <- function(n, elements, prob, random_seed = -1, method = "std")
     sampled_inds <- sample_discrete_std_cpp(n, prob, random_seed)
   } else if (method == "boost") {
     sampled_inds <- sample_discrete_boost_cpp(n, prob, random_seed)
+  } else if (method == "custom") {
+    sampled_inds <- sample_discrete_custom_cpp(n, prob, random_seed)
   } else {
     stop("Unknown method")
   }

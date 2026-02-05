@@ -4,7 +4,7 @@
 #' @param shape Shape parameter of the gamma distribution.
 #' @param scale Scale parameter of the gamma distribution.
 #' @param random_seed Random seed for reproducibility.
-#' @param method Underlying C++ sampling method to use ("std" or "boost").
+#' @param method Underlying C++ sampling method to use ("std", "boost", or "custom").
 #'
 #' @return A vector of sampled values of length `n`.
 #' @export
@@ -16,6 +16,8 @@ sample_gamma <- function(n, shape = 1, scale = 1, random_seed = -1, method = "st
     return(sample_gamma_std_cpp(n, shape, scale, random_seed))
   } else if (method == "boost") {
     return(sample_gamma_boost_cpp(n, shape, scale, random_seed))
+  } else if (method == "custom") {
+    return(sample_gamma_custom_cpp(n, shape, scale, random_seed))
   } else {
     stop("Unknown method")
   }
