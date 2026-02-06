@@ -37,7 +37,7 @@ jobs:
           extra-packages: any::decor
       
       - name: Install cpp11rng
-        run: R CMD INSTALL --preclean .
+        run: Rscript -e 'remotes::install_local(".", force = TRUE)'
       
       - name: Run R replication check script(s)
         run: |
