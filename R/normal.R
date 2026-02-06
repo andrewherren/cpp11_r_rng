@@ -11,7 +11,7 @@
 #'
 #' @examples
 #' draws <- sample_normal(n = 10, mean = 0, sd = 1, random_seed = 1, method = "std")
-sample_normal <- function(n, mean = 0, sd = 1, random_seed = -1, method = "std") {
+sample_normal <- function(n, mean = 0, sd = 1, random_seed = -1, method = "custom") {
   if (method == "std") {
     return(sample_normal_std_cpp(n, mean, sd, random_seed))
   } else if (method == "boost") {

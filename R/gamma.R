@@ -11,7 +11,7 @@
 #'
 #' @examples
 #' draws <- sample_gamma(n = 10, shape = 1, scale = 1, random_seed = 1, method = "std")
-sample_gamma <- function(n, shape = 1, scale = 1, random_seed = -1, method = "std") {
+sample_gamma <- function(n, shape = 1, scale = 1, random_seed = -1, method = "custom") {
   if (method == "std") {
     return(sample_gamma_std_cpp(n, shape, scale, random_seed))
   } else if (method == "boost") {
