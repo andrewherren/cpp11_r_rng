@@ -48,7 +48,7 @@ cpp11::writable::doubles sample_gamma_boost_cpp(int n, double shape, double scal
  */
 double single_gamma_sample(double shape, double scale, std::mt19937& gen) {
   if (shape == 1.0) {
-    return -std::log(standard_uniform_draw(gen)) / scale;
+    return -std::log(standard_uniform_draw(gen)) * scale;
   } else if (shape < 1.0) {
     // Modified Ahrens-Dieter used by numpy:
     // https://github.com/numpy/numpy/blob/main/numpy/random/src/distributions/distributions.c
@@ -59,13 +59,13 @@ double single_gamma_sample(double shape, double scale, std::mt19937& gen) {
       if (u <= 1.0 - shape) {
         double x = std::pow(u, 1.0 / shape);
         if (x <= v) {
-          return x / scale;
+          return x * scale;
         }
       } else {
         double y = -std::log((1 - u) / shape);
         double x = std::pow(1.0 - shape + shape * y, 1.0 / shape);
         if (x <= v + y) {
-          return x / scale;
+          return x * scale;
         }
       }
     }
@@ -89,10 +89,10 @@ double single_gamma_sample(double shape, double scale, std::mt19937& gen) {
       v = v * v * v;
       double u = standard_uniform_draw(gen);
       if (u < 1.0 - 0.0331 * (x * x) * (x * x)) {
-          return b * v / scale;
+          return b * v * scale;
       }
       if (std::log(u) < 0.5 * x * x + b * (1.0 - v + std::log(v))) {
-          return b * v / scale;
+          return b * v * scale;
       }
     }
   } else {
