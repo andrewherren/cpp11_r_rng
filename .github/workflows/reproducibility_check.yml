@@ -34,7 +34,7 @@ jobs:
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-packages: any::decor
+          extra-packages: any::decor, any::remotes
       
       - name: Install cpp11rng
         run: Rscript -e 'remotes::install_local(".", force = TRUE)'
