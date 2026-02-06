@@ -52,7 +52,7 @@ cpp11::writable::doubles sample_normal_custom_cpp(int n, double mean, double sd,
   // https://en.wikipedia.org/wiki/Marsaglia_polar_method
   standard_normal dist;
   for (int i = 0; i < n; i++) {
-    output[i] = dist(gen, mean, sd);
+    output[i] = dist(gen) * sd + mean;
   }
 
   return output;

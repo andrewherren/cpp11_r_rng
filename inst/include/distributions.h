@@ -27,10 +27,10 @@ class standard_normal {
     cached_value_ = 0.0;
   }
 
-  double operator()(std::mt19937& gen, double mean, double sd) {
+  inline double operator()(std::mt19937& gen) {
     if (has_cached_value_) {
       has_cached_value_ = false;
-      return cached_value_ * sd + mean;      
+      return cached_value_;
     } else {
       double u, v, r, s;
       do {
@@ -41,7 +41,7 @@ class standard_normal {
       r = std::sqrt(-2.0 * std::log(s) / s);
       has_cached_value_ = true;
       cached_value_ = v * r;
-      return u * r * sd + mean;
+      return u * r;
     }
   }
 
