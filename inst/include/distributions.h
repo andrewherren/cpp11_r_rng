@@ -32,22 +32,22 @@ class standard_normal {
       has_cached_value_ = false;
       return cached_value_;      
     } else {
+      double u, v, r, s;
       do {
-        u_ = standard_uniform_draw(gen) * 2.0 - 1.0;
-        v_ = standard_uniform_draw(gen) * 2.0 - 1.0;
-        s_ = u_ * u_ + v_ * v_;
-      } while (s_ >= 1.0 || s_ == 0.0);
-      r_ = std::sqrt(-2.0 * std::log(s_) / s_);
+        u = standard_uniform_draw(gen) * 2.0 - 1.0;
+        v = standard_uniform_draw(gen) * 2.0 - 1.0;
+        s = u * u + v * v;
+      } while (s >= 1.0 || s == 0.0);
+      r = std::sqrt(-2.0 * std::log(s) / s);
       has_cached_value_ = true;
-      cached_value_ = v_ * r_;
-      return u_ * r_;
+      cached_value_ = v * r;
+      return u * r;
     }
   }
 
  private:
   bool has_cached_value_;
   double cached_value_;
-  double u_, v_, r_, s_;
 };
 
 /*!
