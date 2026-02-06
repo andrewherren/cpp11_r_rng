@@ -14,6 +14,7 @@
 #' probs <- c(0.2, 0.5, 0.3)
 #' draws <- sample_discrete(n = 10, elements = vec, prob = probs)
 sample_discrete <- function(n, elements, prob, random_seed = -1, method = "std") {
+  prob <- as.numeric(prob)
   if (method == "std") {
     sampled_inds <- sample_discrete_std_cpp(n, prob, random_seed)
   } else if (method == "boost") {
