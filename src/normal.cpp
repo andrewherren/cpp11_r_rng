@@ -2,6 +2,7 @@
 #include <random>
 #include <boost/random/mersenne_twister.hpp>
 #include <boost/random/normal_distribution.hpp>
+#include <distributions.h>
 #include "utils.h"
 
 [[cpp11::register]]
@@ -49,22 +50,9 @@ cpp11::writable::doubles sample_normal_custom_cpp(int n, double mean, double sd,
   // Sample from the normal distribution two draws at a time
   // using uniform draws and caching results.
   // https://en.wikipedia.org/wiki/Marsaglia_polar_method
-  double u, v, r, s;
-  bool cached_value = false;
+  standard_normal dist;
   for (int i = 0; i < n; i++) {
-    if (cached_value) {
-      output[i] = mean + sd * v * r;
-      cached_value = false;
-    } else {
-      do {
-        u = standard_uniform_draw(gen) * 2.0 - 1.0;
-        v = standard_uniform_draw(gen) * 2.0 - 1.0;
-        s = u * u + v * v;
-      } while (s >= 1.0 || s == 0.0);
-      r = std::sqrt(-2.0 * std::log(s) / s);
-      output[i] = mean + sd * u * r;
-      cached_value = true;
-    }
+    output[i] = mean + sd * dist(gen);
   }
 
   return output;

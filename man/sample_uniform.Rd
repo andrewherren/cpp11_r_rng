@@ -4,7 +4,7 @@
 \alias{sample_uniform}
 \title{Sample from uniform distribution on the interval from \code{min} to \code{max}.}
 \usage{
-sample_uniform(n, min = 0, max = 1, random_seed = -1, method = "std")
+sample_uniform(n, min = 0, max = 1, random_seed = -1, method = "custom")
 }
 \arguments{
 \item{n}{Number of samples to draw.}

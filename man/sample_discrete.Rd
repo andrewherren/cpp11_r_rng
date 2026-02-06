@@ -4,7 +4,7 @@
 \alias{sample_discrete}
 \title{Sample from a vector with replacement according to a vector of probability weights.}
 \usage{
-sample_discrete(n, elements, prob, random_seed = -1, method = "std")
+sample_discrete(n, elements, prob, random_seed = -1, method = "custom")
 }
 \arguments{
 \item{n}{Number of samples to draw.}

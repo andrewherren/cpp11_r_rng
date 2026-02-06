@@ -4,7 +4,7 @@
 \alias{sample_normal}
 \title{Sample from normal distribution with mean \code{mean} and standard deviation \code{sd}.}
 \usage{
-sample_normal(n, mean = 0, sd = 1, random_seed = -1, method = "std")
+sample_normal(n, mean = 0, sd = 1, random_seed = -1, method = "custom")
 }
 \arguments{
 \item{n}{Number of samples to draw.}

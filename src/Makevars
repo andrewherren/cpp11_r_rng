@@ -1,3 +1,7 @@
+PKG_ROOT = ..
+
+PKG_CPPFLAGS = -I$(PKG_ROOT)/inst/include
+
 OBJECTS = \
     discrete.o \
     gamma.o \

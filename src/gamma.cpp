@@ -2,6 +2,7 @@
 #include <random>
 #include <boost/random/mersenne_twister.hpp>
 #include <boost/random/gamma_distribution.hpp>
+#include <distributions.h>
 #include "utils.h"
 
 [[cpp11::register]]
