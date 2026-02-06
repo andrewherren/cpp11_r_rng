@@ -191,7 +191,7 @@ class walker_vose {
   }
   
   int operator()(std::mt19937& gen) {
-    double u = gen() * inv_divisor;
+    double u = standard_uniform_draw(gen);
     int i = static_cast<int>(u * n_);
     double y = u * n_ - i;
     return (y < probability_[i]) ? i : alias_[i];
@@ -201,7 +201,6 @@ class walker_vose {
   std::vector<double> probability_;
   std::vector<int> alias_;
   int n_;
-  static constexpr double inv_divisor = 1.0 / static_cast<double>(std::mt19937::max());
 };
 
 #endif // DISTRIBUTIONS_H
