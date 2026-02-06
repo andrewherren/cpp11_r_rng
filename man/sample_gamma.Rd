@@ -4,7 +4,7 @@
 \alias{sample_gamma}
 \title{Sample from gamma distribution with shape \code{shape} and scale \code{scale}.}
 \usage{
-sample_gamma(n, shape = 1, scale = 1, random_seed = -1, method = "std")
+sample_gamma(n, shape = 1, scale = 1, random_seed = -1, method = "custom")
 }
 \arguments{
 \item{n}{Number of samples to draw.}
