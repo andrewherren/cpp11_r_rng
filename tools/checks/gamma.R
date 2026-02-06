@@ -3,7 +3,7 @@ library(cpp11rng)
 
 # Set up gamma parameters
 shape <- 2.5
-scale <- 1
+scale <- 2
 
 # Define sampling parameters
 num_draws <- 10000000
