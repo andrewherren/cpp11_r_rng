@@ -17,8 +17,8 @@ inline double standard_uniform_draw(std::mt19937& gen) {
 
 /*!
  * Standard normal sampler implementing Marsaglia's polar method.
- * 
- * Other references: https://en.wikipedia.org/wiki/Marsaglia_polar_method
+ *
+ * Reference: https://en.wikipedia.org/wiki/Marsaglia_polar_method
  */
 class standard_normal {
  public:
@@ -27,10 +27,10 @@ class standard_normal {
     cached_value_ = 0.0;
   }
 
-  double operator()(std::mt19937& gen) {
+  double operator()(std::mt19937& gen, double mean, double sd) {
     if (has_cached_value_) {
       has_cached_value_ = false;
-      return cached_value_;      
+      return cached_value_ * sd + mean;      
     } else {
       double u, v, r, s;
       do {
@@ -41,7 +41,7 @@ class standard_normal {
       r = std::sqrt(-2.0 * std::log(s) / s);
       has_cached_value_ = true;
       cached_value_ = v * r;
-      return u * r;
+      return u * r * sd + mean;
     }
   }
 
@@ -49,6 +49,87 @@ class standard_normal {
   bool has_cached_value_;
   double cached_value_;
 };
+
+/*!
+ * Stateless standard normal sampler implementing Marsaglia's polar method.
+ * Without caching, this is half as fast as other methods for repeated normal sampling,
+ * but this might be acceptable in cases where a relatively small number of 
+ * normal draws is desired.
+ * 
+ * Reference: https://en.wikipedia.org/wiki/Marsaglia_polar_method
+ */
+inline double sample_standard_normal(double mean, double sd, std::mt19937& gen) {
+  double u, v, r, s;
+  do {
+    u = standard_uniform_draw(gen) * 2.0 - 1.0;
+    v = standard_uniform_draw(gen) * 2.0 - 1.0;
+    s = u * u + v * v;
+  } while (s >= 1.0 || s == 0.0);
+  r = std::sqrt(-2.0 * std::log(s) / s);
+  return u * r * sd + mean;
+};
+
+/*!
+ * Generate a single sample from a gamma distribution using a combination of algorithms
+ * When shape < 1.0, use the Ahrens-Dieter method
+ * When shape > 1.0, use the Marsaglia-Tsang method
+ * When shape == 1.0, sample an exponential via inverse transform method
+ * When shape == 0.0, return 0.0
+ * https://en.wikipedia.org/wiki/Gamma_distribution#Random_variate_generation
+ */
+inline double sample_gamma(std::mt19937& gen, double shape, double scale) {
+  if (shape == 1.0) {
+    return -std::log(standard_uniform_draw(gen)) * scale;
+  } else if (shape < 1.0) {
+    // Modified Ahrens-Dieter used by numpy:
+    // https://github.com/numpy/numpy/blob/main/numpy/random/src/distributions/distributions.c
+    while (true) {
+      double u = standard_uniform_draw(gen);
+      double v0 = standard_uniform_draw(gen);
+      double v = -std::log(v0);
+      if (u <= 1.0 - shape) {
+        double x = std::pow(u, 1.0 / shape);
+        if (x <= v) {
+          return x * scale;
+        }
+      } else {
+        double y = -std::log((1 - u) / shape);
+        double x = std::pow(1.0 - shape + shape * y, 1.0 / shape);
+        if (x <= v + y) {
+          return x * scale;
+        }
+      }
+    }
+  } else if (shape > 1.0) {
+    // Marsaglia-Tsang from numpy
+    double b = shape - 1.0 / 3.0;
+    double c = 1.0 / std::sqrt(9.0 * b);
+    while (true) {
+      double x, v;
+      do {
+        // Marsaglia's polar method for standard normal 
+        double u1, u2, s;
+        do {
+          u1 = standard_uniform_draw(gen) * 2.0 - 1.0;
+          u2 = standard_uniform_draw(gen) * 2.0 - 1.0;
+          s = u1 * u1 + u2 * u2;
+        } while (s >= 1.0 || s == 0.0);
+        x = u1 * std::sqrt(-2.0 * std::log(s) / s);            
+        v = 1.0 + c * x;
+      } while (v <= 0.0);
+      v = v * v * v;
+      double u = standard_uniform_draw(gen);
+      if (u < 1.0 - 0.0331 * (x * x) * (x * x)) {
+          return b * v * scale;
+      }
+      if (std::log(u) < 0.5 * x * x + b * (1.0 - v + std::log(v))) {
+          return b * v * scale;
+      }
+    }
+  } else {
+    return 0.0;
+  }
+}
 
 /*!
  * Walker-Vose alias method for sampling with replacement from a weighted discrete distribution.
