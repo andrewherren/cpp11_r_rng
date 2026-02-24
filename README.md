@@ -6,6 +6,8 @@ This is a lightweight package designed to enable quick R-level comparisons betwe
 2. Gaussian (normal)
 3. Gamma
 4. Categorical / discrete
+5. Half cauchy
+6. Half normal
 
 Currently, this package includes three C++ backends:
 

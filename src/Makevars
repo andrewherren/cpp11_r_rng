@@ -5,6 +5,8 @@ PKG_CPPFLAGS = -I$(PKG_ROOT)/inst/include
 OBJECTS = \
     discrete.o \
     gamma.o \
+    half_cauchy.o \
+    half_normal.o \
     normal.o \
     uniform.o \
     cpp11.o

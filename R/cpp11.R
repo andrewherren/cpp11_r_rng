@@ -24,6 +24,30 @@ sample_gamma_custom_cpp <- function(n, shape, scale, random_seed) {
   .Call(`_cpp11rng_sample_gamma_custom_cpp`, n, shape, scale, random_seed)
 }
 
+sample_half_cauchy_std_cpp <- function(n, random_seed) {
+  .Call(`_cpp11rng_sample_half_cauchy_std_cpp`, n, random_seed)
+}
+
+sample_half_cauchy_boost_cpp <- function(n, random_seed) {
+  .Call(`_cpp11rng_sample_half_cauchy_boost_cpp`, n, random_seed)
+}
+
+sample_half_cauchy_custom_cpp <- function(n, random_seed) {
+  .Call(`_cpp11rng_sample_half_cauchy_custom_cpp`, n, random_seed)
+}
+
+sample_half_normal_std_cpp <- function(n, random_seed) {
+  .Call(`_cpp11rng_sample_half_normal_std_cpp`, n, random_seed)
+}
+
+sample_half_normal_boost_cpp <- function(n, random_seed) {
+  .Call(`_cpp11rng_sample_half_normal_boost_cpp`, n, random_seed)
+}
+
+sample_half_normal_custom_cpp <- function(n, random_seed) {
+  .Call(`_cpp11rng_sample_half_normal_custom_cpp`, n, random_seed)
+}
+
 sample_normal_std_cpp <- function(n, mean, sd, random_seed) {
   .Call(`_cpp11rng_sample_normal_std_cpp`, n, mean, sd, random_seed)
 }

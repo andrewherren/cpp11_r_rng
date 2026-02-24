@@ -2,6 +2,11 @@
 #define DISTRIBUTIONS_H
 #include <numeric>
 #include <random>
+#include <boost/math/constants/constants.hpp>
+
+/* Pi-related constant */
+static constexpr double pi_constant = boost::math::constants::pi<double>();
+static constexpr double half_pi_constant = pi_constant * 0.5;
 
 /*!
  * Generate a standard uniform random variate to 53 bits of precision via two mersenne twisters, see:
@@ -64,7 +69,26 @@ class standard_normal {
  * 
  * Reference: https://en.wikipedia.org/wiki/Marsaglia_polar_method
  */
-inline double sample_standard_normal(double mean, double sd, std::mt19937& gen) {
+inline double sample_standard_normal(std::mt19937& gen) {
+  double u, v, r, s;
+  do {
+    u = standard_uniform_draw_53bit(gen) * 2.0 - 1.0;
+    v = standard_uniform_draw_53bit(gen) * 2.0 - 1.0;
+    s = u * u + v * v;
+  } while (s >= 1.0 || s == 0.0);
+  r = std::sqrt(-2.0 * std::log(s) / s);
+  return u * r;
+};
+
+/*!
+ * Stateless normal sampler implementing Marsaglia's polar method.
+ * Without caching, this is half as fast as other methods for repeated normal sampling,
+ * but this might be acceptable in cases where a relatively small number of 
+ * normal draws is desired.
+ * 
+ * Reference: https://en.wikipedia.org/wiki/Marsaglia_polar_method
+ */
+inline double sample_normal(double mean, double sd, std::mt19937& gen) {
   double u, v, r, s;
   do {
     u = standard_uniform_draw_53bit(gen) * 2.0 - 1.0;
@@ -312,6 +336,22 @@ inline int sample_discrete_stateless(std::mt19937& gen, std::vector<double>& wei
     }
   }
   return weights.size() - 1;
+}
+
+/*!
+ * Generate a single sample from a half cauchy distribution using inverse transform sampling
+ */
+inline double sample_half_cauchy(std::mt19937& gen) {
+  double unif_draw = standard_uniform_draw_53bit(gen);
+  return std::tan(half_pi_constant * unif_draw);
+}
+
+/*!
+ * Generate a single sample from a half normal distribution by taking the absolute value of a standard normal
+ */
+inline double sample_half_normal(std::mt19937& gen) {
+  double normal_draw = sample_standard_normal(gen);
+  return std::abs(normal_draw);
 }
 
 #endif // DISTRIBUTIONS_H
