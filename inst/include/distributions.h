@@ -3,6 +3,7 @@
 #include <numeric>
 #include <random>
 #include <boost/math/constants/constants.hpp>
+#include <boost/math/special_functions/erf.hpp>
 
 /* Pi-related constant */
 static constexpr double pi_constant = boost::math::constants::pi<double>();
@@ -352,6 +353,33 @@ inline double sample_half_cauchy(std::mt19937& gen) {
 inline double sample_half_normal(std::mt19937& gen) {
   double normal_draw = sample_standard_normal(gen);
   return std::abs(normal_draw);
+}
+
+/* Helper functions */
+inline double norm_cdf(double x) {
+  return 0.5 * boost::math::erfc(x / std::sqrt(2.0));
+}
+inline double norm_inv_cdf(double p) {
+  return -std::sqrt(2.0) * boost::math::erfc_inv(2.0 * p);
+}
+
+/* Precompute Phi(0) */
+static constexpr double Phi_0 = norm_cdf(0);
+
+/*!
+ * Generate a single sample from a truncated standard normal distribution, bounded above by 0.
+ */
+inline double sample_std_truncnorm_upper(std::mt19937& gen) {
+  double uniform_draw = standard_uniform_draw_53bit(gen);
+  return norm_inv_cdf(uniform_draw * Phi_0);
+}
+
+/*!
+ * Generate a single sample from a truncated standard normal distribution, bounded below by 0.
+ */
+inline double sample_std_truncnorm_lower(std::mt19937& gen) {
+  double uniform_draw = standard_uniform_draw_53bit(gen);
+  return norm_inv_cdf(uniform_draw + (1 - uniform_draw) * Phi_0);
 }
 
 #endif // DISTRIBUTIONS_H
