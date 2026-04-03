@@ -47,6 +47,48 @@ extern "C" SEXP _cpp11rng_sample_gamma_custom_cpp(SEXP n, SEXP shape, SEXP scale
     return cpp11::as_sexp(sample_gamma_custom_cpp(cpp11::as_cpp<cpp11::decay_t<int>>(n), cpp11::as_cpp<cpp11::decay_t<double>>(shape), cpp11::as_cpp<cpp11::decay_t<double>>(scale), cpp11::as_cpp<cpp11::decay_t<int>>(random_seed)));
   END_CPP11
 }
+// half_cauchy.cpp
+cpp11::writable::doubles sample_half_cauchy_std_cpp(int n, int random_seed);
+extern "C" SEXP _cpp11rng_sample_half_cauchy_std_cpp(SEXP n, SEXP random_seed) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(sample_half_cauchy_std_cpp(cpp11::as_cpp<cpp11::decay_t<int>>(n), cpp11::as_cpp<cpp11::decay_t<int>>(random_seed)));
+  END_CPP11
+}
+// half_cauchy.cpp
+cpp11::writable::doubles sample_half_cauchy_boost_cpp(int n, int random_seed);
+extern "C" SEXP _cpp11rng_sample_half_cauchy_boost_cpp(SEXP n, SEXP random_seed) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(sample_half_cauchy_boost_cpp(cpp11::as_cpp<cpp11::decay_t<int>>(n), cpp11::as_cpp<cpp11::decay_t<int>>(random_seed)));
+  END_CPP11
+}
+// half_cauchy.cpp
+cpp11::writable::doubles sample_half_cauchy_custom_cpp(int n, int random_seed);
+extern "C" SEXP _cpp11rng_sample_half_cauchy_custom_cpp(SEXP n, SEXP random_seed) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(sample_half_cauchy_custom_cpp(cpp11::as_cpp<cpp11::decay_t<int>>(n), cpp11::as_cpp<cpp11::decay_t<int>>(random_seed)));
+  END_CPP11
+}
+// half_normal.cpp
+cpp11::writable::doubles sample_half_normal_std_cpp(int n, int random_seed);
+extern "C" SEXP _cpp11rng_sample_half_normal_std_cpp(SEXP n, SEXP random_seed) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(sample_half_normal_std_cpp(cpp11::as_cpp<cpp11::decay_t<int>>(n), cpp11::as_cpp<cpp11::decay_t<int>>(random_seed)));
+  END_CPP11
+}
+// half_normal.cpp
+cpp11::writable::doubles sample_half_normal_boost_cpp(int n, int random_seed);
+extern "C" SEXP _cpp11rng_sample_half_normal_boost_cpp(SEXP n, SEXP random_seed) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(sample_half_normal_boost_cpp(cpp11::as_cpp<cpp11::decay_t<int>>(n), cpp11::as_cpp<cpp11::decay_t<int>>(random_seed)));
+  END_CPP11
+}
+// half_normal.cpp
+cpp11::writable::doubles sample_half_normal_custom_cpp(int n, int random_seed);
+extern "C" SEXP _cpp11rng_sample_half_normal_custom_cpp(SEXP n, SEXP random_seed) {
+  BEGIN_CPP11
+    return cpp11::as_sexp(sample_half_normal_custom_cpp(cpp11::as_cpp<cpp11::decay_t<int>>(n), cpp11::as_cpp<cpp11::decay_t<int>>(random_seed)));
+  END_CPP11
+}
 // normal.cpp
 cpp11::writable::doubles sample_normal_std_cpp(int n, double mean, double sd, int random_seed);
 extern "C" SEXP _cpp11rng_sample_normal_std_cpp(SEXP n, SEXP mean, SEXP sd, SEXP random_seed) {
@@ -92,18 +134,24 @@ extern "C" SEXP _cpp11rng_sample_uniform_custom_cpp(SEXP n, SEXP min, SEXP max, 
 
 extern "C" {
 static const R_CallMethodDef CallEntries[] = {
-    {"_cpp11rng_sample_discrete_boost_cpp",  (DL_FUNC) &_cpp11rng_sample_discrete_boost_cpp,  3},
-    {"_cpp11rng_sample_discrete_custom_cpp", (DL_FUNC) &_cpp11rng_sample_discrete_custom_cpp, 3},
-    {"_cpp11rng_sample_discrete_std_cpp",    (DL_FUNC) &_cpp11rng_sample_discrete_std_cpp,    3},
-    {"_cpp11rng_sample_gamma_boost_cpp",     (DL_FUNC) &_cpp11rng_sample_gamma_boost_cpp,     4},
-    {"_cpp11rng_sample_gamma_custom_cpp",    (DL_FUNC) &_cpp11rng_sample_gamma_custom_cpp,    4},
-    {"_cpp11rng_sample_gamma_std_cpp",       (DL_FUNC) &_cpp11rng_sample_gamma_std_cpp,       4},
-    {"_cpp11rng_sample_normal_boost_cpp",    (DL_FUNC) &_cpp11rng_sample_normal_boost_cpp,    4},
-    {"_cpp11rng_sample_normal_custom_cpp",   (DL_FUNC) &_cpp11rng_sample_normal_custom_cpp,   4},
-    {"_cpp11rng_sample_normal_std_cpp",      (DL_FUNC) &_cpp11rng_sample_normal_std_cpp,      4},
-    {"_cpp11rng_sample_uniform_boost_cpp",   (DL_FUNC) &_cpp11rng_sample_uniform_boost_cpp,   4},
-    {"_cpp11rng_sample_uniform_custom_cpp",  (DL_FUNC) &_cpp11rng_sample_uniform_custom_cpp,  4},
-    {"_cpp11rng_sample_uniform_std_cpp",     (DL_FUNC) &_cpp11rng_sample_uniform_std_cpp,     4},
+    {"_cpp11rng_sample_discrete_boost_cpp",     (DL_FUNC) &_cpp11rng_sample_discrete_boost_cpp,     3},
+    {"_cpp11rng_sample_discrete_custom_cpp",    (DL_FUNC) &_cpp11rng_sample_discrete_custom_cpp,    3},
+    {"_cpp11rng_sample_discrete_std_cpp",       (DL_FUNC) &_cpp11rng_sample_discrete_std_cpp,       3},
+    {"_cpp11rng_sample_gamma_boost_cpp",        (DL_FUNC) &_cpp11rng_sample_gamma_boost_cpp,        4},
+    {"_cpp11rng_sample_gamma_custom_cpp",       (DL_FUNC) &_cpp11rng_sample_gamma_custom_cpp,       4},
+    {"_cpp11rng_sample_gamma_std_cpp",          (DL_FUNC) &_cpp11rng_sample_gamma_std_cpp,          4},
+    {"_cpp11rng_sample_half_cauchy_boost_cpp",  (DL_FUNC) &_cpp11rng_sample_half_cauchy_boost_cpp,  2},
+    {"_cpp11rng_sample_half_cauchy_custom_cpp", (DL_FUNC) &_cpp11rng_sample_half_cauchy_custom_cpp, 2},
+    {"_cpp11rng_sample_half_cauchy_std_cpp",    (DL_FUNC) &_cpp11rng_sample_half_cauchy_std_cpp,    2},
+    {"_cpp11rng_sample_half_normal_boost_cpp",  (DL_FUNC) &_cpp11rng_sample_half_normal_boost_cpp,  2},
+    {"_cpp11rng_sample_half_normal_custom_cpp", (DL_FUNC) &_cpp11rng_sample_half_normal_custom_cpp, 2},
+    {"_cpp11rng_sample_half_normal_std_cpp",    (DL_FUNC) &_cpp11rng_sample_half_normal_std_cpp,    2},
+    {"_cpp11rng_sample_normal_boost_cpp",       (DL_FUNC) &_cpp11rng_sample_normal_boost_cpp,       4},
+    {"_cpp11rng_sample_normal_custom_cpp",      (DL_FUNC) &_cpp11rng_sample_normal_custom_cpp,      4},
+    {"_cpp11rng_sample_normal_std_cpp",         (DL_FUNC) &_cpp11rng_sample_normal_std_cpp,         4},
+    {"_cpp11rng_sample_uniform_boost_cpp",      (DL_FUNC) &_cpp11rng_sample_uniform_boost_cpp,      4},
+    {"_cpp11rng_sample_uniform_custom_cpp",     (DL_FUNC) &_cpp11rng_sample_uniform_custom_cpp,     4},
+    {"_cpp11rng_sample_uniform_std_cpp",        (DL_FUNC) &_cpp11rng_sample_uniform_std_cpp,        4},
     {NULL, NULL, 0}
 };
 }

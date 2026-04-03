@@ -2,6 +2,8 @@
 
 export(sample_discrete)
 export(sample_gamma)
+export(sample_half_cauchy)
+export(sample_half_normal)
 export(sample_normal)
 export(sample_uniform)
 importFrom(stats,rgamma)
